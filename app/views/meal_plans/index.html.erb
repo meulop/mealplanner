@@ -1,0 +1,9 @@
+<table>
+<% @meal_plans.each do |mp| %>
+<tr>
+  <td><%= mp.meal.name %></td>
+  <td><%= mp.date %></td>
+  <td><%= link_to "Edit meal plan", edit_meal_plan_path(mp) %></td>
+</tr>
+<% end %>
+</table>

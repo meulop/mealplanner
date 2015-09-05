@@ -1,0 +1,28 @@
+<% if @err %>
+<div class="error">
+<p><%= @err %></p>
+</div>
+<% end %>
+<table class="meal">
+<tr>
+  <th>Meal</th>
+  <th>Last Planned</th>
+  <th>Next Planned</th>
+</tr>
+<% @meals.each do |m| 
+  @last_planned = MealPlan.limit(1).where("meal_id = ? and date < ?",m.id, Date.today).take
+  @next_planned = MealPlan.limit(1).where("meal_id = ? and date >= ?",m.id, Date.today).take
+%>
+  <tr>
+    <td><%= m.name %></td>
+    <td><%= @last_planned ? link_to(@last_planned.date, edit_meal_plan_path(@last_planned)) : "Never planned before" %></td>
+    <td><%= @next_planned ? link_to(@next_planned.date, edit_meal_plan_path(@next_planned)) : "Not planned yet" %></td>
+    <td><%= link_to "Plan Meal", new_meal_plan_path(m) %></td>
+<% end %>
+</table>
+<p><%= link_to "Meal Plans", meal_plans_path %></p>
+<h2>Add new Meal</h2>
+<%= form_for(@new_meal) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.submit "Add" %>
+<% end %>

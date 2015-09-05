@@ -1,0 +1,5 @@
+<%= form_for(@meal_plan) do |f| %>
+  <%= f.collection_select(:meal_id, Meal.all, :id, :name, {:selected => @meal_id }) %>
+  <%= f.date_select :date %>
+  <%= f.submit "Plan Meal" %>
+<% end %>
